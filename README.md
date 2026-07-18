@@ -1,8 +1,7 @@
 <div align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/monarchcastletech/Cloudy-Shiny/main/docs/logo-dark.png"><img src="docs/logo.png" alt="Cloudy Shiny logo" width="140"></picture>
-  <!-- CODEX: generate a clean product logo here — a minimalist "Cloudy & Shiny" weather/markets mark (a half-cloud / half-sun motif) over a deep navy (#0b1f3a) field, terminal-grade and corporate; square, transparent background. -->
+  <img src="logo.png" alt="Cloudy&amp;Shiny Index logo" width="420">
 
-  # Cloudy Shiny
+  # Cloudy&Shiny Index
   ### Hourly global fear &amp; greed market-sentiment dashboard
 
   <!-- badge row -->
@@ -96,7 +95,7 @@ streamlit run app.py
 On Windows, `open_system.bat` provides a one-click launch wrapper.
 
 ### Automated refresh
-`.github/workflows/hourly.yml` runs on a scheduled cron (~50-minute cadence) plus manual `workflow_dispatch`. Each run fetches fresh data, rebuilds `index.html`, and commits the updated `index.html`, `sentiment_data.csv`, and `feed_health.csv` back to the branch — with retry logic and a concurrency guard so runs never collide. GitHub Pages serves the committed `index.html` directly.
+`.github/workflows/hourly.yml` runs on a scheduled cron (~50-minute cadence) plus manual `workflow_dispatch`. Scheduled and live manual runs fetch fresh data, rebuild `index.html`, and commit the updated `index.html`, `sentiment_data.csv`, and `feed_health.csv` back to the branch — with retry logic and a concurrency guard so runs never collide. Manual dispatch defaults to a safe dry-run that validates the committed dashboard without fetching or publishing. GitHub Pages serves the committed `index.html` directly.
 
 ## 🧱 Part of Monarch Castle
 > A product of **Financial Intelligence** · **Monarch Castle Technologies** — an operating company of **[Monarch Castle Holdings](https://github.com/MonarchCastleHoldings)**.
@@ -123,7 +122,7 @@ Lifecycle: **Active**. The badge and this statement describe maintenance status,
 
 ## Public access
 
-[Open the published project](http://monarchcastle.tech/Cloudy-Shiny/)
+[Open the published project](https://monarchcastletech.github.io/Cloudy-Shiny/)
 
 ## Screenshots
 
@@ -149,7 +148,7 @@ python -m pip install -r requirements.txt
 ```
 
 ```shell
-python app.py
+streamlit run app.py
 ```
 
 Run only in a trusted development environment and review repository-specific prerequisites before using networked or hardware features.
@@ -160,6 +159,10 @@ Run only in a trusted development environment and review repository-specific pre
 - `sentiment_tracker.py` — repository-specific implementation, data, or configuration boundary.
 
 ## Tests
+
+```shell
+python -m unittest discover -v
+```
 
 ```shell
 node --test tests/repository-hygiene.test.mjs

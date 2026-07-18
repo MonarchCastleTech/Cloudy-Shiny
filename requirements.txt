@@ -1,5 +1,8 @@
+curl_cffi
+matplotlib
+numpy
 pandas
 plotly
 requests
 streamlit
-yfinance
+yfinance>=1.0
