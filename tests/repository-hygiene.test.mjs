@@ -10,7 +10,7 @@ const match = readme.match(/<!-- repository-hygiene:start -->([\s\S]*?)<!-- repo
 const contract = match?.[1] ?? "";
 const expectedHeadings = ["Repository status","Public access","Screenshots","Data and methodology","Update frequency","Quick start","Architecture","Tests","Provenance","Forecast limitations","Security","License","Citation","Masterbrand endorsement"];
 const methodologyEvidence = ["sentiment_tracker.py","feed_health.csv"];
-const quickStartCommands = ["python -m pip install -r requirements.txt","python app.py"];
+const quickStartCommands = ["python -m pip install -r requirements.txt","streamlit run app.py"];
 const architectureIdentifiers = ["app.py","sentiment_tracker.py"];
 const thirdPartyExclusions = ["market feeds and derived CSV snapshots","logos, trademarks, screenshots, and external assets"];
 const licenseDecision = "new-mit";
@@ -19,7 +19,7 @@ test("MonarchCastleTech/Cloudy-Shiny exposes the complete repository documentati
   assert.ok(match, "README must include the managed repository-hygiene block");
   assert.ok(contract.includes("Hourly global fear & greed market-sentiment dashboard — the Cloudy&Shiny Index. Financial Intelligence, Monarch Castle Technologies."), "README purpose must match the canonical registry");
   assert.match(contract, /lifecycle-active/);
-  assert.ok(contract.includes("http://monarchcastle.tech/Cloudy-Shiny/"));
+  assert.ok(contract.includes("https://monarchcastletech.github.io/Cloudy-Shiny/"));
   for (const heading of expectedHeadings) assert.ok(contract.includes(`## ${heading}`), `missing heading: ${heading}`);
   for (const evidence of methodologyEvidence) {
     assert.ok(existsSync(resolve(root, evidence)), `missing methodology evidence: ${evidence}`);

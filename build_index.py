@@ -1,4 +1,5 @@
 import math
+import sys
 from pathlib import Path
 
 import pandas as pd
@@ -1040,6 +1041,7 @@ status_color = STATUS_COLORS[label]
 gauge_label = f"{label} | {STATUS_TAGLINES[label]}"
 gauge_rotation = -90.0 + (score / 100.0) * 180.0
 updated_time = latest["timestamp"].strftime("%Y-%m-%d %H:%M")
+updated_iso = latest["timestamp"].isoformat().replace("+00:00", "Z")
 
 chart_recent = prepare_recent_hours(scored_data, hours=48)
 if chart_recent.empty or len(chart_recent) < 2:
@@ -1472,6 +1474,7 @@ replacements = {
     "{STOCK_GAP}": stock_gap_label,
     "{GAP_COLOR}": gap_color,
     "{UPDATED_TIME}": updated_time,
+    "{UPDATED_ISO}": updated_iso,
     "{US_WEIGHT}": format_value(us_weight, 1),
     "{ASIA_WEIGHT}": format_value(asia_weight, 1),
     "{EU_WEIGHT}": format_value(eu_weight, 1),
@@ -1518,5 +1521,17 @@ replacements = {
 for key, value in replacements.items():
     template_html = template_html.replace(key, value)
 
-OUTPUT_FILE.write_text(template_html, encoding="utf-8")
-print(f"Wrote static dashboard: {OUTPUT_FILE}")
+if "--check" in sys.argv:
+    current_html = OUTPUT_FILE.read_text(encoding="utf-8") if OUTPUT_FILE.exists() else ""
+    required_markers = (
+        "<title>Cloudy&Shiny Index | Monarch Castle Technologies</title>",
+        '<link rel="canonical" href="https://monarchcastletech.github.io/Cloudy-Shiny/">',
+        f'<time datetime="{updated_iso}">{updated_time} UTC</time>',
+        'id="methodology"',
+    )
+    if any(marker not in current_html for marker in required_markers):
+        raise SystemExit("Static dashboard is stale; run python build_index.py")
+    print("Static dashboard is current")
+else:
+    OUTPUT_FILE.write_text(template_html, encoding="utf-8")
+    print(f"Wrote static dashboard: {OUTPUT_FILE}")

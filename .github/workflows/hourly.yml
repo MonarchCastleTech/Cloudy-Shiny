@@ -10,7 +10,13 @@ on:
     - cron: '30 2,7,12,17,22 * * *'
     - cron: '20 3,8,13,18,23 * * *'
     - cron: '10 4,9,14,19 * * *'
-  workflow_dispatch: # Allows manual run from Actions tab
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Validate the committed dashboard without fetching or publishing
+        required: true
+        type: boolean
+        default: true
 
 concurrency:
   group: cloudyshiny-hourly-update
@@ -42,6 +48,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Fetch latest sentiment data
+      if: ${{ github.event_name != 'workflow_dispatch' || inputs.dry_run != true }}
       run: |
         set +e
         tracker_ok=0
@@ -66,6 +73,10 @@ jobs:
     - name: Build static index.html
       run: |
         set -e
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
+          python build_index.py --check
+          exit 0
+        fi
         for attempt in 1 2; do
           echo "build_index.py attempt $attempt"
           if python build_index.py; then
@@ -79,6 +90,7 @@ jobs:
         done
 
     - name: Commit and push changes
+      if: ${{ github.event_name != 'workflow_dispatch' || inputs.dry_run != true }}
       env:
         BRANCH_NAME: ${{ github.ref_name }}
       run: |
