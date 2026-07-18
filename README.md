@@ -133,7 +133,10 @@ The preview is maintained as a repository asset; the live interface or generated
 
 ## Data and methodology
 
-See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the implementation files in this repository. Source dates, transformation steps, and known gaps must travel with analytical outputs.
+- [sentiment_tracker.py](sentiment_tracker.py)
+- [feed_health.csv](feed_health.csv)
+
+These repository-specific sources define the methodology or provenance boundary. Source dates, transformation steps, and known gaps must travel with analytical outputs.
 
 ## Update frequency
 
@@ -153,13 +156,8 @@ Run only in a trusted development environment and review repository-specific pre
 
 ## Architecture
 
-- `agents.md` — repository entry point or configuration.
-- `app.py` — repository entry point or configuration.
-- `apple-touch-icon.png` — repository entry point or configuration.
-- `build_index.py` — repository entry point or configuration.
-- `CITATION.cff` — repository entry point or configuration.
-- `CloudyShiny/` — implementation or data module.
-- `favicon.ico` — repository entry point or configuration.
+- `app.py` — repository-specific implementation, data, or configuration boundary.
+- `sentiment_tracker.py` — repository-specific implementation, data, or configuration boundary.
 
 ## Tests
 
