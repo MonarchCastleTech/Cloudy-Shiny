@@ -4,6 +4,7 @@ import re
 import subprocess
 import sys
 import unittest
+from html import unescape
 from pathlib import Path
 
 
@@ -71,7 +72,7 @@ class ProductContractTests(unittest.TestCase):
 
         for filename in ("template.html", "index.html"):
             surface = (ROOT / filename).read_text(encoding="utf-8")
-            self.assertIn("A Monarch Castle Technologies product", surface)
+            self.assertIn("Part of Monarch Castle Technologies", surface)
             self.assertRegex(
                 surface,
                 r'<img src="logo\.png" alt="Cloudy&amp;Shiny Index logo"',
@@ -82,6 +83,7 @@ class ProductContractTests(unittest.TestCase):
             surface = (ROOT / filename).read_text(encoding="utf-8")
             self.assertIn('<section id="methodology"', surface)
             self.assertIn("Methodology and Weights", surface)
+            self.assertIn("<strong>Freshness:</strong> Latest published reading", surface)
             self.assertIn("Updates approximately every 50 minutes", surface)
             self.assertRegex(
                 surface,
@@ -113,6 +115,26 @@ class ProductContractTests(unittest.TestCase):
             "@media (max-width:640px)",
         ):
             self.assertIn(requirement, template)
+
+        generated = (ROOT / "index.html").read_text(encoding="utf-8")
+        h1_text = [
+            unescape(re.sub(r"<[^>]+>", "", value)).strip()
+            for value in re.findall(r"<h1\b[^>]*>(.*?)</h1>", generated, re.DOTALL)
+        ]
+        self.assertEqual(h1_text, [PRODUCT_TITLE])
+
+        h2_ids = re.findall(r'<h2\b[^>]*id="([^"]+)"[^>]*>', generated)
+        self.assertEqual(
+            h2_ids,
+            [
+                "sentiment-panel-title",
+                "performance-panel-title",
+                "reliability-panel-title",
+            ],
+        )
+        for heading_id in h2_ids:
+            self.assertIn(f'aria-labelledby="{heading_id}"', generated)
+        self.assertGreaterEqual(len(re.findall(r"<h3\b", generated)), 4)
 
     def test_generated_surface_is_current(self) -> None:
         result = subprocess.run(

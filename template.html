@@ -43,6 +43,7 @@
     .tape-item.bearish{color:var(--red);border-color:rgba(248,81,73,.4)}
     .grid{display:grid;grid-template-columns:300px 1fr 340px;gap:1px;background:var(--border);min-height:calc(100vh - 90px)}
     .panel{background:var(--panel);padding:18px}
+    .panel-title{font:700 15px "Spectral",Georgia,serif;letter-spacing:.02em;margin-bottom:14px;color:var(--txt)}
     .h{font:600 10px "IBM Plex Mono",ui-monospace,monospace;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;padding-bottom:7px;margin-bottom:12px;border-bottom:1px solid var(--border)}
     .score-label{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
     .score{font:700 54px "IBM Plex Mono",ui-monospace,monospace;color:var(--accent);line-height:1;margin-bottom:4px}
@@ -181,8 +182,8 @@
     <div class="brand">
       <div class="logo"><img src="logo.png" alt="Cloudy&amp;Shiny Index logo" width="112" height="56"></div>
       <div>
-        <div class="name">Cloudy&amp;Shiny Index</div>
-        <div class="sub">A Monarch Castle Technologies product</div>
+        <h1 class="name">Cloudy&amp;Shiny Index</h1>
+        <div class="sub">Part of Monarch Castle Technologies</div>
       </div>
     </div>
     <div class="hdr-right">
@@ -199,7 +200,8 @@
   </div>
 
   <main class="grid" id="main-content">
-    <section class="panel">
+    <section class="panel" aria-labelledby="sentiment-panel-title">
+      <h2 class="panel-title" id="sentiment-panel-title">Sentiment and Forecast</h2>
       <div class="score-label">Cloudy&Shiny Index</div>
       <div class="score">{GLOBAL_SCORE}</div>
       <div class="status" style="color:{STATUS_COLOR}">{GAUGE_LABEL}</div>
@@ -289,7 +291,7 @@
       </div>
 
       <section id="methodology" aria-labelledby="methodology-title">
-        <div class="h" id="methodology-title">Methodology and Weights</div>
+        <h3 class="h" id="methodology-title">Methodology and Weights</h3>
         <div class="method">
           <div class="method-formula">Score = (Stock x 0.40) + (Crypto x 0.30) + ((100 - VIX norm) x 0.30)</div>
           <div class="method-line">Stock sentiment and Crypto fear/greed are normalized to 0-100.</div>
@@ -307,7 +309,8 @@
       </section>
     </section>
 
-    <section class="panel">
+    <section class="panel" aria-labelledby="performance-panel-title">
+      <h2 class="panel-title" id="performance-panel-title">Performance and Forecast Evidence</h2>
       <div class="kpis">
         <div class="k"><div class="kl">1D Delta</div><div class="kv {KPI_DAY_CLASS}">{KPI_DAY_DELTA}</div><div class="kn">Day-over-day mood shift</div></div>
         <div class="k"><div class="kl">7D Delta</div><div class="kv {KPI_WEEK_CLASS}">{KPI_WEEK_DELTA}</div><div class="kn">Weekly regime movement</div></div>
@@ -346,7 +349,7 @@
         </div>
       </div>
 
-      <div class="h" style="margin-bottom:10px">Asset Performance vs 60-Day MA</div>
+      <h3 class="h" style="margin-bottom:10px">Asset Performance vs 60-Day MA</h3>
       <div class="assets">{ASSET_CARDS}</div>
 
       <div class="breadth">
@@ -360,9 +363,10 @@
       </div>
     </section>
 
-    <section class="panel">
+    <section class="panel" aria-labelledby="reliability-panel-title">
+      <h2 class="panel-title" id="reliability-panel-title">Reliability and Signal History</h2>
       <div class="health">
-        <div class="health-title">Feed Reliability</div>
+        <h3 class="health-title">Feed Reliability</h3>
         {HEALTH_ROWS}
         <div class="health-meta">
           <div>Overall Score: <span class="{HEALTH_OVERALL_CLASS}">{HEALTH_OVERALL_SCORE}%</span></div>
@@ -371,14 +375,14 @@
         </div>
       </div>
 
-      <div class="h">Signal Board</div>
+      <h3 class="h">Signal Board</h3>
       <div class="signals">{SIGNAL_ROWS}</div>
 
-      <div class="h" style="margin-top:14px">Historical Feed</div>
+      <h3 class="h" style="margin-top:14px">Historical Feed</h3>
       <div class="feed">{HISTORY_ITEMS}</div>
 
       <div class="bench">
-        <div class="h">Component Snapshot</div>
+        <h3 class="h">Component Snapshot</h3>
         <div class="br"><span class="bn">Stock Sentiment</span><span class="bv" style="color:var(--accent)">{STOCK_SCORE}</span></div>
         <div class="br"><span class="bn">Crypto Fear and Greed</span><span class="bv" style="color:var(--yellow)">{CRYPTO_SCORE}</span></div>
         <div class="br"><span class="bn">Inverse VIX Score</span><span class="bv" style="color:var(--green)">{VIX_INV_SCORE}</span></div>
@@ -387,8 +391,9 @@
     </section>
 
     <footer class="footer">
-      <span>Cloudy&amp;Shiny Index · A Monarch Castle Technologies product</span>
+      <span>Cloudy&amp;Shiny Index · Part of Monarch Castle Technologies</span>
       <div class="freshness" aria-live="polite">
+        <span><strong>Freshness:</strong> Latest published reading</span>
         <span>Updates approximately every 50 minutes</span>
         <time datetime="{UPDATED_ISO}">{UPDATED_TIME} UTC</time>
       </div>
