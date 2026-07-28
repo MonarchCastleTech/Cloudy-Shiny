@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import test from "node:test";
@@ -33,6 +34,10 @@ test("MonarchCastleTech/Cloudy-Shiny exposes the complete repository documentati
 });
 
 test("MonarchCastleTech/Cloudy-Shiny keeps every managed image local and ships a valid social preview", () => {
+  assert.equal(
+    createHash("sha256").update(readFileSync(resolve(root, "logo.png"))).digest("hex"),
+    "570096f66a606d8a861e585a7fa7ec7ae530d0218f2fcf295d2879f9433b1444"
+  );
   const images = [...contract.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map(([, target]) => target);
   assert.ok(images.includes("docs/brand/organization-lockup.png"));
   assert.ok(images.includes("docs/social-preview.png"));
