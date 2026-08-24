@@ -63,7 +63,7 @@ class ProductContractTests(unittest.TestCase):
         self.assertIn('"{UPDATED_ISO}": updated_iso', app)
         self.assertIn(f"# {PRODUCT_TITLE}", readme)
         self.assertIn(f"[Open the published project]({CANONICAL_URL})", readme)
-        self.assertNotIn("monarchcastle.tech/Cloudy-Shiny", readme)
+        self.assertNotIn("monarchcastletech.github.io/Cloudy-Shiny", readme)
 
     def test_endorsement_and_approved_logo_are_visible(self) -> None:
         logo = ROOT / "logo.png"

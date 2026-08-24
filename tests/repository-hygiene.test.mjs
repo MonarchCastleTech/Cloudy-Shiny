@@ -69,7 +69,7 @@ test("MonarchCastleTech/Cloudy-Shiny documents citation, rights, and HTTPS polic
   if (licenseDecision === "preserve-agpl") assert.match(license, /GNU AFFERO GENERAL PUBLIC LICENSE/);
   for (const exclusion of thirdPartyExclusions) assert.ok(notice.includes(exclusion), `missing rights exclusion: ${exclusion}`);
   const links = [...contract.matchAll(/https?:\/\/[^\s)>]+/g)].map(([url]) => url);
-  const allowedHttp = new Set(["http://localhost", "http://monarchcastle.tech/Cloudy-Shiny/"]);
+  const allowedHttp = new Set(["http://localhost", "https://monarchcastletech.github.io/Cloudy-Shiny/"]);
   for (const link of links.filter((url) => url.startsWith("http://"))) {
     assert.ok([...allowedHttp].some((prefix) => prefix && link.startsWith(prefix)), `HTTP link lacks an explicit exception: ${link}`);
   }
