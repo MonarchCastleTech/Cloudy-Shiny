@@ -47,6 +47,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Verify offline product contracts
+      run: |
+        python -m unittest discover -v
+        node --test tests/repository-hygiene.test.mjs
+
     - name: Fetch latest sentiment data
       if: ${{ github.event_name != 'workflow_dispatch' || inputs.dry_run != true }}
       run: |
