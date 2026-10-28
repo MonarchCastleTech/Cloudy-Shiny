@@ -164,6 +164,10 @@ class ProductContractTests(unittest.TestCase):
         self.assertIn("dry_run:", workflow)
         self.assertIn("python build_index.py --check", workflow)
         self.assertIn("inputs.dry_run != true", workflow)
+        self.assertIn("deploy-pages:", workflow)
+        self.assertIn("needs: update-index", workflow)
+        self.assertIn("Verify published reading", workflow)
+        self.assertIn("grep -Fq \"$expected\"", workflow)
 
 
 if __name__ == "__main__":
