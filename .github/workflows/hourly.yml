@@ -129,6 +129,6 @@ jobs:
         done
 
         if [ "$push_ok" -ne 1 ]; then
-          echo "Warning: failed to push after retries. Next scheduled run will retry."
-          exit 0
+          echo "Failed to push after retries. The next scheduled run can retry." >&2
+          exit 1
         fi
