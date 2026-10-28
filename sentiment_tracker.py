@@ -1,5 +1,6 @@
 import csv
 import datetime as dt
+import math
 import time
 from pathlib import Path
 from typing import Dict, Optional, Tuple
@@ -24,6 +25,7 @@ VIX_MAX_DEFAULT = 80.0
 REQUEST_TIMEOUT = 10
 REQUEST_RETRIES = 3
 RETRY_BACKOFF_SECONDS = 2.0
+FALLBACK_MAX_AGE_HOURS = 72
 
 FIELDNAMES = [
     "timestamp",
@@ -263,6 +265,39 @@ def load_latest_row(path: Path) -> Dict[str, Optional[float]]:
         return rows[-1]
 
 
+def load_recent_live_rows(data_path: Path, health_path: Path, now: dt.datetime) -> Dict[str, dict]:
+    """Return only readings backed by a recent, successful source fetch."""
+    if not data_path.exists() or not health_path.exists():
+        return {}
+    with health_path.open("r", newline="", encoding="utf-8") as handle:
+        health = {row.get("timestamp"): row for row in csv.DictReader(handle)}
+    with data_path.open("r", newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    selected = {}
+    for row in reversed(rows):
+        stamp = row.get("timestamp", "")
+        try:
+            observed = dt.datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+            if observed.tzinfo is None:
+                continue
+            age = now - observed.astimezone(dt.timezone.utc)
+        except (ValueError, TypeError):
+            continue
+        if not dt.timedelta(0) <= age <= dt.timedelta(hours=FALLBACK_MAX_AGE_HOURS):
+            continue
+        record = health.get(stamp, {})
+        for source, status_field, value_field in (
+            ("stock", "cnn_status", "stock_fear_greed"),
+            ("crypto", "crypto_status", "crypto_fear_greed"),
+            ("vix", "vix_status", "vix_normalized"),
+        ):
+            if source not in selected and record.get(status_field) == "live" and coerce_float(row.get(value_field)) is not None:
+                selected[source] = row
+        if len(selected) == 3:
+            break
+    return selected
+
+
 def ensure_data_file(path: Path) -> None:
     if path.exists() and path.stat().st_size > 0:
         return
@@ -305,7 +340,8 @@ def coerce_float(value: Optional[object]) -> Optional[float]:
     if value is None:
         return None
     try:
-        return float(value)
+        result = float(value)
+        return result if math.isfinite(result) else None
     except (TypeError, ValueError):
         return None
 
@@ -331,7 +367,7 @@ def calculate_weighted_mood_score(stock: float, crypto: float, vix_normalized: f
 def main() -> int:
     ensure_data_file(DATA_FILE)
     ensure_health_file(HEALTH_FILE)
-    latest = load_latest_row(DATA_FILE)
+    recent_live = load_recent_live_rows(DATA_FILE, HEALTH_FILE, dt.datetime.now(dt.timezone.utc))
 
     stock = None
     crypto = None
@@ -364,8 +400,11 @@ def main() -> int:
     start = time.perf_counter()
     try:
         vix_value, vix_norm = fetch_vix()
+        if vix_norm is None:
+            raise ValueError("VIX source returned no usable reading")
         source_status["vix"] = "live"
     except Exception as exc:
+        vix_value, vix_norm = None, None
         print(f"Warning: failed to fetch VIX ({exc})")
         errors.append(f"vix:{exc}")
         source_status["vix"] = "failed"
@@ -373,23 +412,23 @@ def main() -> int:
 
     fallback_used = False
     if stock is None:
-        stock = coerce_float(latest.get("stock_fear_greed"))
+        stock = coerce_float(recent_live.get("stock", {}).get("stock_fear_greed"))
         if stock is not None:
             source_status["stock"] = "fallback"
             fallback_used = True
         else:
             source_status["stock"] = "missing"
     if crypto is None:
-        crypto = coerce_float(latest.get("crypto_fear_greed"))
+        crypto = coerce_float(recent_live.get("crypto", {}).get("crypto_fear_greed"))
         if crypto is not None:
             source_status["crypto"] = "fallback"
             fallback_used = True
         else:
             source_status["crypto"] = "missing"
     if vix_value is None:
-        vix_value = coerce_float(latest.get("vix"))
+        vix_value = coerce_float(recent_live.get("vix", {}).get("vix"))
     if vix_norm is None:
-        vix_norm = coerce_float(latest.get("vix_normalized"))
+        vix_norm = coerce_float(recent_live.get("vix", {}).get("vix_normalized"))
     if source_status["vix"] != "live":
         if vix_norm is not None:
             source_status["vix"] = "fallback"
