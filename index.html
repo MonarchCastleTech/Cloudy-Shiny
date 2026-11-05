@@ -142,7 +142,7 @@
     .breadth{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px}
     .b-title{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
     .bar{display:flex;height:14px;border:1px solid var(--border);border-radius:3px;overflow:hidden;margin-bottom:8px}
-    .bull{background:rgba(63,185,80,.8);width:16.7%}.neu{background:rgba(210,153,34,.7);width:41.7%}.bear{background:rgba(248,81,73,.8);width:41.7%}
+    .bull{background:rgba(63,185,80,.8);width:16.7%}.neu{background:rgba(210,153,34,.7);width:50.0%}.bear{background:rgba(248,81,73,.8);width:33.3%}
     .b-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font:10px "IBM Plex Mono",ui-monospace,monospace;color:var(--muted)}
     .b-meta span{display:block;font-size:16px;font-weight:700;margin-top:3px}
     .signals,.feed{display:grid;gap:8px}
@@ -219,17 +219,17 @@
 
 <div class="tape-item bearish">
   <span class="tape-ticker">^N225</span>
-  <span class="tape-score">26</span>
-</div>
-
-<div class="tape-item bearish">
-  <span class="tape-ticker">000001.SS</span>
   <span class="tape-score">21</span>
 </div>
 
 <div class="tape-item bearish">
+  <span class="tape-ticker">000001.SS</span>
+  <span class="tape-score">26</span>
+</div>
+
+<div class="tape-item neutral">
   <span class="tape-ticker">^HSI</span>
-  <span class="tape-score">29</span>
+  <span class="tape-score">47</span>
 </div>
 
 <div class="tape-item bearish">
@@ -280,17 +280,17 @@
 
 <div class="tape-item bearish">
   <span class="tape-ticker">^N225</span>
-  <span class="tape-score">26</span>
-</div>
-
-<div class="tape-item bearish">
-  <span class="tape-ticker">000001.SS</span>
   <span class="tape-score">21</span>
 </div>
 
 <div class="tape-item bearish">
+  <span class="tape-ticker">000001.SS</span>
+  <span class="tape-score">26</span>
+</div>
+
+<div class="tape-item neutral">
   <span class="tape-ticker">^HSI</span>
-  <span class="tape-score">29</span>
+  <span class="tape-score">47</span>
 </div>
 
 <div class="tape-item bearish">
@@ -591,14 +591,14 @@
     </div>
     <div class="asset-ma-badge below">BELOW MA</div>
   </div>
-  <div class="asset-score bearish">26.2</div>
+  <div class="asset-score bearish">21.3</div>
   <div class="asset-spark">
     <svg class="spark-svg" viewBox="0 0 120 24" preserveAspectRatio="none">
-      <polyline class="spark-line down" points="0.00,12.21 4.14,13.58 8.28,14.70 12.41,11.10 16.55,4.88 20.69,6.71 24.83,2.08 28.97,0.00 33.10,1.83 37.24,4.64 41.38,4.67 45.52,4.67 49.66,8.21 53.79,8.31 57.93,17.68 62.07,15.14 66.21,16.29 70.34,18.67 74.48,17.13 78.62,21.97 82.76,22.58 86.90,24.00 91.03,20.95 95.17,19.01 99.31,17.02 103.45,20.89 107.59,21.48 111.72,21.48 115.86,21.48 120.00,23.05" />
+      <polyline class="spark-line down" points="0.00,11.76 4.14,13.09 8.28,14.17 12.41,10.70 16.55,4.70 20.69,6.47 24.83,2.01 28.97,0.00 33.10,1.77 37.24,4.47 41.38,4.50 45.52,4.50 49.66,7.91 53.79,8.00 57.93,17.04 62.07,14.59 66.21,15.70 70.34,17.99 74.48,16.51 78.62,21.17 82.76,21.76 86.90,23.13 91.03,20.19 95.17,18.32 99.31,16.40 103.45,20.13 107.59,20.70 111.72,20.70 115.86,20.70 120.00,24.00" />
     </svg>
   </div>
   <div class="asset-meta">
-    <span>RSI: 34</span>
+    <span>RSI: 32</span>
     <span>Wt: 5.1%</span>
   </div>
 </div>
@@ -612,14 +612,14 @@
     </div>
     <div class="asset-ma-badge below">BELOW MA</div>
   </div>
-  <div class="asset-score bearish">20.5</div>
+  <div class="asset-score bearish">26.2</div>
   <div class="asset-spark">
     <svg class="spark-svg" viewBox="0 0 120 24" preserveAspectRatio="none">
-      <polyline class="spark-line down" points="0.00,0.00 4.14,5.37 8.28,4.80 12.41,3.83 16.55,3.83 20.69,3.83 24.83,3.83 28.97,3.83 33.10,3.83 37.24,6.34 41.38,6.19 45.52,7.56 49.66,7.26 53.79,10.05 57.93,15.00 62.07,14.27 66.21,13.06 70.34,12.69 74.48,14.54 78.62,19.11 82.76,16.41 86.90,15.83 91.03,19.91 95.17,17.16 99.31,19.65 103.45,24.00 107.59,20.76 111.72,23.25 115.86,23.25 120.00,23.25" />
+      <polyline class="spark-line down" points="0.00,0.00 4.14,5.37 8.28,4.80 12.41,3.83 16.55,3.83 20.69,3.83 24.83,3.83 28.97,3.83 33.10,3.83 37.24,6.34 41.38,6.19 45.52,7.56 49.66,7.26 53.79,10.05 57.93,15.00 62.07,14.27 66.21,13.06 70.34,12.69 74.48,14.54 78.62,19.11 82.76,16.41 86.90,15.83 91.03,19.91 95.17,17.16 99.31,19.65 103.45,24.00 107.59,20.76 111.72,23.25 115.86,23.25 120.00,19.56" />
     </svg>
   </div>
   <div class="asset-meta">
-    <span>RSI: 35</span>
+    <span>RSI: 42</span>
     <span>Wt: 21.3%</span>
   </div>
 </div>
@@ -633,14 +633,14 @@
     </div>
     <div class="asset-ma-badge below">BELOW MA</div>
   </div>
-  <div class="asset-score bearish">29.1</div>
+  <div class="asset-score neutral">46.5</div>
   <div class="asset-spark">
     <svg class="spark-svg" viewBox="0 0 120 24" preserveAspectRatio="none">
-      <polyline class="spark-line down" points="0.00,1.86 4.14,0.00 8.28,1.67 12.41,0.41 16.55,0.41 20.69,9.42 24.83,8.46 28.97,5.09 33.10,7.20 37.24,12.04 41.38,6.06 45.52,5.22 49.66,4.18 53.79,4.61 57.93,8.15 62.07,6.40 66.21,6.40 70.34,10.89 74.48,13.92 78.62,24.00 82.76,21.77 86.90,20.11 91.03,22.50 95.17,21.75 99.31,23.66 103.45,18.94 107.59,17.55 111.72,15.69 115.86,15.69 120.00,15.69" />
+      <polyline class="spark-line down" points="0.00,1.86 4.14,0.00 8.28,1.67 12.41,0.41 16.55,0.41 20.69,9.42 24.83,8.46 28.97,5.09 33.10,7.20 37.24,12.04 41.38,6.06 45.52,5.22 49.66,4.18 53.79,4.61 57.93,8.15 62.07,6.40 66.21,6.40 70.34,10.89 74.48,13.92 78.62,24.00 82.76,21.77 86.90,20.11 91.03,22.50 95.17,21.75 99.31,23.66 103.45,18.94 107.59,17.55 111.72,15.69 115.86,15.69 120.00,3.46" />
     </svg>
   </div>
   <div class="asset-meta">
-    <span>RSI: 37</span>
+    <span>RSI: 53</span>
     <span>Wt: 0.4%</span>
   </div>
 </div>
@@ -738,14 +738,14 @@
     </div>
     <div class="asset-ma-badge above">ABOVE MA</div>
   </div>
-  <div class="asset-score neutral">46.8</div>
+  <div class="asset-score neutral">47.0</div>
   <div class="asset-spark">
     <svg class="spark-svg" viewBox="0 0 120 24" preserveAspectRatio="none">
-      <polyline class="spark-line up" points="0.00,24.00 4.14,20.57 8.28,18.04 12.41,16.84 16.55,7.16 20.69,9.69 24.83,6.11 28.97,11.18 33.10,5.07 37.24,6.56 41.38,5.52 45.52,0.00 49.66,5.96 53.79,0.45 57.93,8.65 62.07,11.03 66.21,8.94 70.34,12.67 74.48,11.93 78.62,14.46 82.76,11.48 86.90,9.24 91.03,3.88 95.17,5.81 99.31,8.05 103.45,10.43 107.59,12.37 111.72,10.58 115.86,18.05 120.00,18.05" />
+      <polyline class="spark-line up" points="0.00,24.00 4.14,20.57 8.28,18.04 12.41,16.84 16.55,7.16 20.69,9.69 24.83,6.11 28.97,11.18 33.10,5.07 37.24,6.56 41.38,5.52 45.52,0.00 49.66,5.96 53.79,0.45 57.93,8.65 62.07,11.03 66.21,8.94 70.34,12.67 74.48,11.93 78.62,14.46 82.76,11.48 86.90,9.24 91.03,3.88 95.17,5.81 99.31,8.05 103.45,10.43 107.59,12.37 111.72,10.58 115.86,18.74 120.00,18.74" />
     </svg>
   </div>
   <div class="asset-meta">
-    <span>RSI: 41</span>
+    <span>RSI: 40</span>
     <span>Wt: 7.5%</span>
   </div>
 </div>
@@ -756,8 +756,8 @@
         <div class="bar"><div class="bull"></div><div class="neu"></div><div class="bear"></div></div>
         <div class="b-meta">
           <div>Bullish <span>2</span></div>
-          <div>Neutral <span>5</span></div>
-          <div>Bearish <span>5</span></div>
+          <div>Neutral <span>6</span></div>
+          <div>Bearish <span>4</span></div>
         </div>
       </div>
     </section>
@@ -869,9 +869,9 @@
 <div class="signal-row">
   <div class="signal-left">
     <div class="signal-name">Market Breadth</div>
-    <div class="signal-detail">Bull 2 | Neutral 5 | Bear 5</div>
+    <div class="signal-detail">Bull 2 | Neutral 6 | Bear 4</div>
   </div>
-  <div class="signal-value down">-25.0</div>
+  <div class="signal-value neutral">-16.7</div>
 </div>
 </div>
 
@@ -961,7 +961,7 @@
       <div class="freshness" aria-live="polite">
         <span><strong>Freshness:</strong> Latest published reading</span>
         <span>Updates approximately every 50 minutes</span>
-        <time datetime="2026-11-05T01:04:45.488395Z">2026-11-05 01:04 UTC</time>
+        <time datetime="2026-11-05T01:47:40.910609Z">2026-11-05 01:47 UTC</time>
       </div>
     </footer>
   </main>
